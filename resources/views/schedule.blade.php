@@ -54,8 +54,8 @@
                         <td>
                             <div class="row">
                                 <div class="col">
-                                    <select id="" class="form-control" name="morning_start[]">
-                                        @for ( $i=5 ; $i<=11 ; $i++) <option value="{{$i}}:00" @if ($i.':00
+                                    <select class="form-control" name="morning_start[]">
+                                        @for ( $i=5; $i<=11; $i++) <option value="{{$i}}:00" @if ($i.':00
                                             AM'==$workDay->morning_start)selected @endif>{{$i}}:00 AM</option>
                                             <option value="{{$i}}:30" @if ($i.':30 AM'==$workDay->morning_start)selected
                                                 @endif>{{$i}}:30 AM</option>
@@ -64,8 +64,8 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <select id="" class="form-control" name="morning_end[]">
-                                        @for ( $i=5 ; $i<=11 ; $i++) <option value="{{$i}}:00" @if ($i.':00
+                                    <select class="form-control" name="morning_end[]">
+                                        @for ( $i=5; $i<=11; $i++) <option value="{{$i}}:00" @if ($i.':00
                                             AM'==$workDay->morning_end)selected @endif>{{$i}}:00 AM</option>
                                             <option value="{{$i}}:30" @if ($i.':30 AM'==$workDay->morning_end)selected
                                                 @endif>{{$i}}:30 AM</option>
@@ -80,21 +80,20 @@
                         <td>
                             <div class="row">
                                 <div class="col">
-                                    <select id="" class="form-control" name="afternoon_start[]">
-                                        @for ( $i=1 ; $i<=5 ; $i++) <option value="{{$i+12}}:00" @if ($i.':00
+                                    <select class="form-control" name="afternoon_start[]">
+                                        @for ( $i=1; $i<=11; $i++) <option value="{{$i+12}}:00" @if ($i.':00
                                             PM'==$workDay->afternoon_start)selected @endif>{{$i}}:00 PM</option>
-
                                             <option value="{{$i+12}}:30" @if ($i.':30 PM'==$workDay->
                                                 afternoon_start)selected @endif>{{$i}}:30 PM</option>
                                             @endfor
 
                                     </select>
                                 </div>
-                                <div class="col">
-                                    <select id="" class="form-control" name="afternoon_end[]">
-                                        @for ( $i=1 ; $i<=5 ; $i++) <option value="{{$i+12}}:00" @if ($i.':00
-                                            PM'==$workDay->afternoon_end)selected @endif>{{$i}}:00 PM</option>
 
+                                <div class="col">
+                                    <select class="form-control" name="afternoon_end[]">
+                                        @for ( $i=1; $i<=11; $i++) <option value="{{$i+12}}:00" @if ($i.':00
+                                            PM'==$workDay->afternoon_end)selected @endif>{{$i}}:00 PM</option>
                                             <option value="{{$i+12}}:30" @if ($i.':30 PM'==$workDay->
                                                 afternoon_end)selected @endif>{{$i}}:30 PM</option>
                                             @endfor
