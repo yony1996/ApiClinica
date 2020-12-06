@@ -23,7 +23,7 @@ class ScheduleController extends Controller
                 return $workDay;
             }
         );
-        dd($workDays->toArray());
+        //dd($workDays->toArray());
         return view('schedule',compact('workDays','days'));
     }
 
