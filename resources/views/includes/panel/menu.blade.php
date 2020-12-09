@@ -52,7 +52,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{route('Patient.index')}}">
+        <a class="nav-link" href="{{route('Appointment.create')}}">
             <i class="ni ni-send text-red"></i>Reservar Cita
         </a>
     </li>

@@ -26,6 +26,20 @@
             </div>
             @endif
 
+            @if (session('errors'))
+            <div class="alert alert-danger" role="alert">
+                Los cambios se han guardado pero tenga en cuenta que:</br>
+                @foreach (session('errors') as $error)
+                {{$error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @endforeach
+
+
+            </div>
+            @endif
+
         </div>
 
         <div class="table-responsive">
@@ -55,19 +69,21 @@
                             <div class="row">
                                 <div class="col">
                                     <select class="form-control" name="morning_start[]">
-                                        @for ( $i=5; $i<=11; $i++) <option value="{{$i}}:00" @if ($i.':00
-                                            AM'==$workDay->morning_start)selected @endif>{{$i}}:00 AM</option>
+                                        @for ( $i=5; $i<=11; $i++) <option value="{{($i<10 ? '0':'').$i}}:00"
+                                            @if($i.':00 AM'==$workDay->morning_start)selected @endif>{{$i}}:00 AM
+                                            </option>
                                             <option value="{{$i}}:30" @if ($i.':30 AM'==$workDay->morning_start)selected
-                                                @endif>{{$i}}:30 AM</option>
+                                                @endif>{{($i<10 ? '0':'').$i}}:30 AM</option>
                                             @endfor
 
                                     </select>
                                 </div>
                                 <div class="col">
                                     <select class="form-control" name="morning_end[]">
-                                        @for ( $i=5; $i<=11; $i++) <option value="{{$i}}:00" @if ($i.':00
-                                            AM'==$workDay->morning_end)selected @endif>{{$i}}:00 AM</option>
-                                            <option value="{{$i}}:30" @if ($i.':30 AM'==$workDay->morning_end)selected
+                                        @for ( $i=5; $i<=11; $i++) <option value="{{($i<10 ? '0':'').$i}}:00"
+                                            @if($i.':00 AM'==$workDay->morning_end)selected @endif>{{$i}}:00 AM</option>
+                                            <option value="{{($i<10 ? '0':'').$i}}:30" @if ($i.':30 AM'==$workDay->
+                                                morning_end)selected
                                                 @endif>{{$i}}:30 AM</option>
                                             @endfor
                                     </select>

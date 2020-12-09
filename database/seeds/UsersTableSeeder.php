@@ -15,14 +15,29 @@ class UsersTableSeeder extends Seeder
 
         'name' => 'Admin',
         'email' => 'Admin@gmail.com',
-        'password' => bcrypt('Admin'), // secret
+        'password' => bcrypt('root123'), // secret
         'remember_token' => str_random(10),
-        'cedula'=> '05054372',
-        'addres'=>'',
-        'phone'=>'',
         'role'=>'Admin',
             
         ]);
+        User::create([
+
+            'name' => 'Paciente 1',
+            'email' => 'Patient@gmail.com',
+            'password' => bcrypt('root123'), // secret
+            'remember_token' => str_random(10),
+            'role'=>'patient',
+                
+            ]);
+            User::create([
+
+                'name' => 'Medico 1',
+                'email' => 'Doctor@gmail.com',
+                'password' => bcrypt('roo123'), // secret
+                'remember_token' => str_random(10),
+                'role'=>'doctor',
+                    
+                ]);
         factory(User::class, 50)->create();
     }
 }

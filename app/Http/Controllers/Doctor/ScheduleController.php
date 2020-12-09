@@ -8,22 +8,36 @@ use App\WorkDay;
 use Carbon\Carbon;
 class ScheduleController extends Controller
 {
+    private $days=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+    
     public function edit(){
-        $days=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+        
         $workDays=WorkDay::where('user_id',auth()->id())->get();
-        /**
+        
+        if(count($workDays)>0){
+               /**
          * map junto a carbon cambian el formato de la hora que bien de la base de datos para poder ubicar en la vista las horas correctas
          */
-        $workDays->map(
-            function($workDay){
-                $workDay->morning_start= (new Carbon($workDay->morning_start))->format('g:i A');
-                $workDay->morning_end= (new Carbon($workDay->morning_end))->format('g:i A');
-                $workDay->afternoon_start= (new Carbon($workDay->afternoon_start))->format('g:i A');
-                $workDay->afternoon_end= (new Carbon($workDay->afternoon_end))->format('g:i A');
-                return $workDay;
+            $workDays->map(
+                function($workDay){
+                    $workDay->morning_start= (new Carbon($workDay->morning_start))->format('g:i A');
+                    $workDay->morning_end= (new Carbon($workDay->morning_end))->format('g:i A');
+                    $workDay->afternoon_start= (new Carbon($workDay->afternoon_start))->format('g:i A');
+                    $workDay->afternoon_end= (new Carbon($workDay->afternoon_end))->format('g:i A');
+                    return $workDay;
+                }
+            );
+        }else{
+            $workDays= collect();
+            for($i=0;$i<7;$i++){
+                $workDays->push(new WorkDay());
             }
-        );
+
+        }
+        
+     
         //dd($workDays->toArray());
+        $days=$this->days;
         return view('schedule',compact('workDays','days'));
     }
 
@@ -35,7 +49,14 @@ class ScheduleController extends Controller
         $afternoon_start=$request->input('afternoon_start');
         $afternoon_end=$request->input('afternoon_end');
  
-        for ($i=0; $i <7 ; ++$i) { 
+        $errors=[];
+        for ($i=0; $i<7 ; ++$i) { 
+            if ($morning_start[$i] > $morning_end[$i]) {
+                $errors[]=' Las horas del turno de la mañana son inconsistentes para el día '. $this->days[$i].'.';
+            }
+            if ($afternoon_start[$i] > $afternoon_end[$i]) {
+                $errors[]=' Las horas del turno de la tarde son inconsistentes para el día '. $this->days[$i].'.';
+            } 
             
             WorkDay::updateOrCreate(
                 [
@@ -52,6 +73,12 @@ class ScheduleController extends Controller
                 ]
             );
         }
-        return back();
+        if(count($errors)>0){
+            return back()->with(compact('errors'));
+        }else{
+            $notification='Los cambios se han guardado con exito';
+            return back()->with(compact('notification'));
+        }
+        
     }
 }
